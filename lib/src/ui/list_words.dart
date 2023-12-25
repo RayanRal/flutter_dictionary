@@ -16,18 +16,6 @@ class _ListWordsScreenState extends State<ListWordsScreen> {
   void initState() {
     super.initState();
     DbManager.initDb();
-
-    DbManager.insertDictWord(const DictWord(
-      id: 0,
-      original: 'Forest',
-      translation: 'Ліс',
-    ));
-
-    DbManager.insertDictWord(const DictWord(
-      id: 0,
-      original: 'Fox',
-      translation: 'Лисиця',
-    ));
   }
 
   @override

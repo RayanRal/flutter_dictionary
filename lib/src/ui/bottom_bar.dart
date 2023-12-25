@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:dict_proj/src/ui/add_word.dart';
 import 'package:dict_proj/src/ui/list_words.dart';
+import 'package:flutter/material.dart';
 
 class BottomBar {
   static BottomAppBar buildBottomAppBar(BuildContext context) {

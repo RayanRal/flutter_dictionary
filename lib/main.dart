@@ -23,7 +23,7 @@ class MyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('FlutDict'),
+        title: const Text('Flutter Dict'),
       ),
       body: const Center(
         child: Column(

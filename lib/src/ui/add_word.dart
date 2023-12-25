@@ -1,4 +1,3 @@
-import 'package:dict_proj/src/db/dict_word.dart';
 import 'package:flutter/material.dart';
 
 import '../db/db.dart';
@@ -12,7 +11,10 @@ class AddWordScreen extends StatefulWidget {
 }
 
 class _AddWordScreenState extends State<AddWordScreen> {
-  final TextEditingController _textFieldController = TextEditingController();
+  final TextEditingController _originalTextFieldController =
+      TextEditingController();
+  final TextEditingController _translationFieldController =
+      TextEditingController();
 
   @override
   void initState() {
@@ -34,9 +36,18 @@ class _AddWordScreenState extends State<AddWordScreen> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
-                controller: _textFieldController,
+                controller: _originalTextFieldController,
                 decoration: const InputDecoration(
                   hintText: 'Enter word:',
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                controller: _translationFieldController,
+                decoration: const InputDecoration(
+                  hintText: 'Enter translation (can be empty):',
                 ),
               ),
             ),
@@ -53,8 +64,10 @@ class _AddWordScreenState extends State<AddWordScreen> {
   }
 
   void _addItem() {
-    String newWord = _textFieldController.text;
-    DbManager.insertWord(newWord, "");
-    _textFieldController.clear();
+    String word = _originalTextFieldController.text;
+    String translation = _translationFieldController.text;
+    DbManager.insertWord(word, translation);
+    _originalTextFieldController.clear();
+    _translationFieldController.clear();
   }
 }
