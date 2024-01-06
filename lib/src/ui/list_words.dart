@@ -1,5 +1,6 @@
 import 'package:dict_proj/src/db/db.dart';
 import 'package:dict_proj/src/db/dict_word.dart';
+import 'package:dict_proj/src/ui/word_popup.dart';
 import 'package:flutter/material.dart';
 
 import 'bottom_bar.dart';
@@ -40,6 +41,9 @@ class _ListWordsScreenState extends State<ListWordsScreen> {
                 return ListTile(
                   title: Text(words[index].original),
                   subtitle: Text(words[index].translation),
+                  onLongPress: () {
+                    ModifyWordDialog.showModify(context, words[index]);
+                  },
                 );
               },
             );

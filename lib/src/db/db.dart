@@ -58,16 +58,21 @@ class DbManager {
     });
   }
 
-  static Future<void> updateWord(DictWord word) async {
+  static Future<void> updateWord(String original, String newTranslation) async {
     final db = await initDb();
 
     await db.update(
       TABLE_NAME,
-      word.toMap(),
-      where: 'id = ?',
-      whereArgs: [word.id],
+      {
+        'translation': newTranslation,
+      },
+      where: 'original = ?',
+      whereArgs: [original],
+      conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
+
+
 
   static Future<void> deleteWord(int id) async {
     final db = await initDb();

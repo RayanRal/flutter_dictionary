@@ -1,5 +1,5 @@
-import 'package:dict_proj/src/ui/add_word.dart';
 import 'package:dict_proj/src/ui/list_words.dart';
+import 'package:dict_proj/src/ui/word_popup.dart';
 import 'package:flutter/material.dart';
 
 class BottomBar {
@@ -21,10 +21,7 @@ class BottomBar {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AddWordScreen()),
-              );
+              ModifyWordDialog.showAddNew(context);
             },
           ),
           IconButton(
