@@ -25,7 +25,20 @@ class ModifyWordDialog {
     );
   }
 
-  static void _addItem(String word, String translation) {
+  static Widget getModifyWindow(
+    BuildContext context,
+    DictWord wordData,
+  ) {
+    return _buildDialog(context, _modifyItem, wordData);
+  }
+
+  static Widget getAddWindow(
+      BuildContext context,
+      ) {
+    return _buildDialog(context, _addItem, null);
+  }
+
+    static void _addItem(String word, String translation) {
     DbManager.insertWord(word, translation);
   }
 

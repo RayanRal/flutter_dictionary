@@ -13,10 +13,27 @@ class ListWordsScreen extends StatefulWidget {
 }
 
 class _ListWordsScreenState extends State<ListWordsScreen> {
+  List<DictWord> wordsList = [];
+
   @override
   void initState() {
     super.initState();
     DbManager.initDb();
+    _loadWords();
+  }
+
+  Future<void> _loadWords() async {
+    final words = await DbManager.getWords();
+    setState(() {
+      wordsList = words;
+    });
+  }
+
+  void _handleLongPress(DictWord word) async {
+    await showDialog(
+        context: context,
+        builder: (context) => ModifyWordDialog.getModifyWindow(context, word));
+    await _loadWords(); // Reload words after modification
   }
 
   @override
@@ -26,28 +43,16 @@ class _ListWordsScreenState extends State<ListWordsScreen> {
         title: const Text('Saved Words'),
       ),
       bottomNavigationBar: BottomBar.buildBottomAppBar(context),
-      body: FutureBuilder(
-        future: DbManager.getWords(),
-        builder: (context, AsyncSnapshot<List<DictWord>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('SnapshotError: ${snapshot.error}'));
-          } else {
-            final words = snapshot.data;
-            return ListView.builder(
-              itemCount: words!.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(words[index].original),
-                  subtitle: Text(words[index].translation),
-                  onLongPress: () {
-                    ModifyWordDialog.showModify(context, words[index]);
-                  },
-                );
-              },
-            );
-          }
+      body: ListView.builder(
+        itemCount: wordsList.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(wordsList[index].original),
+            subtitle: Text(wordsList[index].translation),
+            onLongPress: () {
+              _handleLongPress(wordsList[index]);
+            },
+          );
         },
       ),
     );
